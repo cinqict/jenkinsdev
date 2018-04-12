@@ -16,6 +16,7 @@ This is a historical alias for getInstanceOrNull() but with ambiguous nullabilit
 - Jenkins.get() from 2.98 ???
 
 In the docker-plugin they use:
+https://plugins.jenkins.io/docker-plugin
 
 ```groovy
 // get Jenkins instance
