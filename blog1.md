@@ -5,11 +5,16 @@ I needed a Jenkins Docker image that I could launch and destroy easily with the 
 To my surprise, I needed to google for multiple references to set this up. 
 Enough reason to share my findings and result.
 
-Jenkins offers a official Docker image `jenkinsci`. 
-This is a good starting point to create your own image since there is a extensive readme as well, 
+Jenkins offers a official Docker image [jenkins/jenkins](https://hub.docker.com/r/jenkins/jenkins/). 
+This is a good starting point to create your own image since there is a extensive readme as well
 with al kinds of code snippets for your Dockerfile. 
 
-Running the jenkinsci image you see immediately some manual steps which are nice for a first Jenkins experience, but not for your development environment. 
+```bash
+docker pull jenkins/jenkins
+docker run -p 80:8080 jenkins/jenkins
+```
+
+Running the `jenkins/jenkins` image you see immediately some manual steps which are nice for a first Jenkins experience, but not for your development environment. 
 You need to
 - Add a secret key from the log file, 
 - Select plugins, 

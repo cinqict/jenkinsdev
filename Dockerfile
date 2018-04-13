@@ -1,5 +1,5 @@
 # Extended from https://github.com/jenkinsci/docker/blob/master/README.md
-FROM jenkins/jenkins:lts
+FROM jenkins/jenkins
 
 # Skip setup wizard
 ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
