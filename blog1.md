@@ -110,11 +110,8 @@ String gitRepoUrl = "https://github.com/Dirc/jenkinsdev.git"
 String jobName = gitRepoUrl.tokenize(".")[-2].tokenize("/")[-1]
 
 
-// Define Jenkins
-//Jenkins jenkins = Jenkins.instance
-Jenkins jenkins = Jenkins.get()
-
 // Create MultiBranch pipeline
+Jenkins jenkins = Jenkins.get()
 WorkflowMultiBranchProject mbp = jenkins.createProject(WorkflowMultiBranchProject.class, jobName)
 
 // Define Git repo
