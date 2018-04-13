@@ -2,12 +2,11 @@
 ## ToDo
 - Spelling checker  ---> DONE
 - Update list of plugins  ---> DONE
-- Add example branch to github
-- Use `jenkins.instance` or `jenkins.getInstance()`   ---> See remarks.md
+- Use `jenkins.instance` or `jenkins.getInstance()`   ---> DONE, see remarks.md
+- advanced or not  ---> DONE, second blog
+- Are the import jenkins* and hudson* really needed? ---> DONE
 - Resolve all LINKS
-- advanced or not
-- Are the import jenkins* and hudson* really needed?
-
+- Add example branch to github
 
 
 # Jenkins Development Image
@@ -52,8 +51,6 @@ docker run -p 80:8080 jenkinsdev
 The first step we take is to disable the welcome page called "SetupWizard" where you need to add a secret key. 
 This can be done by adding a Java option to your Dockerfile.
 
-<LINK?>
-
 ```dockerfile
 # Skip setup wizard
 ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
@@ -63,19 +60,14 @@ ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
 Second we do not want to login each restart, hence we need to remove the required default credentials. 
 This can be done with a small Groovy script which we add to the init.groovy.d directory. All Groovy files in there will be executed during startup.
 
-<LINK?>
-
 We create the file: `init.groovy.d/disable-securit.groovy`
 
 ```groovy
 #!/usr/bin/env groovy
-import jenkins.model.*
-import hudson.security.*
 
-def instance = Jenkins.getInstance()
-
-instance.disableSecurity()
-instance.save()
+Jenkins jenkins = Jenkins.get()
+jenkins.disableSecurity()
+jenkins.save()
 ```
 
 And we put the whole `init.groovy.d` directory in our image using COPY in the Dockerfile:
@@ -111,11 +103,6 @@ I have added a Hello World Jenkinsfile example to this repository so we let Jenk
 
 ```groovy
 #!/usr/bin/env groovy
-import jenkins.*
-import jenkins.model.*
-import jenkins.model.Jenkins
-import hudson.*
-import hudson.model.*
 import hudson.util.PersistedList
 import jenkins.branch.*
 import jenkins.plugins.git.*
@@ -129,14 +116,15 @@ String jobName = gitRepoUrl.tokenize(".")[-2].tokenize("/")[-1]
 
 
 // Define Jenkins
-Jenkins jenkins = Jenkins.instance
+//Jenkins jenkins = Jenkins.instance
+Jenkins jenkins = Jenkins.get()
 
 // Create MultiBranch pipeline
 WorkflowMultiBranchProject mbp = jenkins.createProject(WorkflowMultiBranchProject.class, jobName)
 
 // Define Git repo
 //GitSCMSource(id, gitRepo, credentialsId, includes, excludes, ignoreOnPushNotifications)
-GitSCMSource gitSCMSource = new GitSCMSource(null, gitRepoUrl, "", "*", "", false)
+GitSCMSource gitSCMSource = new GitSCMSource("not_null", gitRepoUrl, "", "*", "", false)
 BranchSource branchSource = new BranchSource(gitSCMSource)
 
 // Add Git repo as source to MBP
