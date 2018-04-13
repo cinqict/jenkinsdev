@@ -89,7 +89,7 @@ RUN /usr/local/bin/install-plugins.sh \
 ## Add Multibranch Pipeline
 During startup we want Jenkins to load our Git repository containing the Jenkinsfile.
 This can be done by adding another Groovy script `initial_project.groovy` to the `init.groovy.d` directory. 
-I have added a Hello World Jenkinsfile example to this repository so we let Jenkins look in https://github.com/Dirc/jenkinsdev.git.
+I have added a Hello World Jenkinsfile example to the repository so we let Jenkins look in https://github.com/Dirc/jenkinsdev.git.
 
 ```groovy
 #!/usr/bin/env groovy
@@ -134,10 +134,10 @@ So when we rebuild and start the image, Jenkins will start with our new project.
 
 ## Dockerfile
 Both the list of plugins and the init.groovy.d scripts will change from time to time.
-To follow the [Docker best practices](https://cinqict.github.io/post/christiaan/docker_file_best_practices/) , we should put them at the end of our Dockerfile.
+Following the [Docker best practices](https://cinqict.github.io/post/christiaan/docker_file_best_practices/) , we should put them at the end of our Dockerfile.
 Since downloading plugins takes most time, we only want to do it if really necessary, hence we put the plugins above the init.groovy.d scripts. 
 
-Hence we end up with the following Dockerfile:
+We end up with the following Dockerfile:
 
 ```dockerfile
 # Extended from https://github.com/jenkinsci/docker/blob/master/README.md
@@ -160,12 +160,13 @@ COPY --chown=jenkins:jenkins init.groovy.d/ /var/jenkins_home/init.groovy.d/
 # Remark: there is no CMD or statement. Since jenkins/jenkins:lts image uses an ENTRYPOINT, this image will inherit that behavior.
 ```
 
-
-This Dockerfile gives use a simple Jenkins image which we can run en destroy in seconds 
-and is therefore very useful for your local development on our Jenkinsfile or init Groovy scripts.
+## Summarize
+This Dockerfile and init Groovy scripts gives use a simple Jenkins image which we can run en destroy in seconds. 
+This is very useful for developing your Jenkinsfiles and init Groovy scripts.
 
 
 Eric Cornet <br>
 CI/CD Engineer 
 
+All code can be found on https://github.com/Dirc/jenkinsdev
 
