@@ -1,14 +1,4 @@
 
-## ToDo
-- Spelling checker  ---> DONE
-- Update list of plugins  ---> DONE
-- Use `jenkins.instance` or `jenkins.getInstance()`   ---> DONE, see remarks.md
-- advanced or not  ---> DONE, second blog
-- Are the import jenkins* and hudson* really needed? ---> DONE
-- Resolve all LINKS
-- Add example branch to github
-
-
 # Jenkins Development Image
 For developing my Jenkinsfile and init Groovy scripts, 
 I needed a Jenkins Docker image that I could launch and destroy easily with the least amount of manual interaction. 
@@ -144,7 +134,7 @@ So when we rebuild and start the image, Jenkins will start with our new project.
 
 ## Dockerfile
 Both the list of plugins and the init.groovy.d scripts will change from time to time.
-To follow the Docker best practices <LINK? to Christiaans blog>, we should put them at the end of our Dockerfile.
+To follow the [Docker best practices](https://cinqict.github.io/post/christiaan/docker_file_best_practices/) , we should put them at the end of our Dockerfile.
 Since downloading plugins takes most time, we only want to do it if really necessary, hence we put the plugins above the init.groovy.d scripts. 
 
 Hence we end up with the following Dockerfile:

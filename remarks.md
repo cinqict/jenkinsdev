@@ -34,3 +34,14 @@ Jenkins jenkins = Jenkins.get()
 ```
 
 
+
+## ToDo blog1
+- Spelling checker  ---> DONE
+- Update list of plugins  ---> DONE
+- Use `jenkins.instance` or `jenkins.getInstance()`   ---> DONE, see remarks.md
+- advanced or not  ---> DONE, second blog
+- Are the import jenkins* and hudson* really needed? ---> DONE
+- Resolve all LINKS ---> DONE
+- Add example branch to github ---> DONE
+
+
