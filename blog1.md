@@ -1,13 +1,13 @@
 
 # Jenkins Development Image
-For developing my Jenkinsfile and init Groovy scripts, 
-I needed a Jenkins Docker image that I could launch and destroy easily with the least amount of manual interaction. 
-To my surprise, I needed to google for multiple references to set this up. 
-Enough reason to share my findings and result.
+While developing my Jenkinsfile and init Groovy scripts, 
+I needed a Jenkins Docker image that I could launch and destroy easily with a minimal amount of manual interaction. 
+To my surprise, I needed to google multiple references to set this up. 
+Enough reason for me to share my findings and results.
 
 Jenkins offers a official Docker image [jenkins/jenkins](https://hub.docker.com/r/jenkins/jenkins/). 
-This is a good starting point to create your own image since there is a extensive readme
-with al kinds of code snippets for your Dockerfile. 
+This is a good starting point to create your own image since it contains an extensive readme
+with al kinds of code snippets that you can use in your Dockerfile. 
 
 ```bash
 # Get latest image
@@ -16,17 +16,17 @@ docker pull jenkins/jenkins
 docker run -p 80:8080 jenkins/jenkins
 ```
 
-Browse to `http://localhost:80` you see immediately some manual steps which are nice for a first Jenkins experience, but not for your development environment. 
+Browse to `http://localhost:80` youimmediately see some manual steps which are nice for a first Jenkins experience, but not in your development environment. 
 You need to:
 - Copy a secret key from the log file, 
 - Select plugins
 - Login with a default username/password 
 - Create a project
 
-This gives us four manual steps which we want to get rid of. 
-To achieve this, we will create a Dockerfile and some initial Groovy script to configure Jenkins during start up.
+So this gives us four manual steps we want to get rid of. 
+To do this, we will create a Dockerfile and some initial Groovy script to configure Jenkins during start up.
 
-## Set things up
+## Setting things up
 We start our Dockerfile by extending the Jenkins image as described in the readme ot the `jenkins/jenkins` image.
 
 ```dockerfile
@@ -45,7 +45,7 @@ docker run -p 80:8080 jenkinsdev
 
 
 ## Disable Setup Wizard
-The first step we take is to disable the welcome page called "SetupWizard" where you need to add a secret key. 
+The first step to take is to disable the welcome page called "SetupWizard" where you need to add a secret key. 
 This can be done by adding a Java option to your Dockerfile.
 
 ```dockerfile
@@ -54,10 +54,10 @@ ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
 ```
 
 ## Remove Credentials
-Second we do not want to login each restart, hence we need to remove the required default credentials. 
-This can be done with a small Groovy script which we add to the init.groovy.d directory. All Groovy files in this directory will be executed during startup.
+As a second step we do not want to login upon each restart, so we need to remove the required default credentials. 
+This is done with a small Groovy script which i've added to the init.groovy.d directory. All Groovy files in this directory will be executed during startup.
 
-We create the file: `init.groovy.d/disable-securit.groovy`
+I've created the file: `init.groovy.d/disable-securit.groovy`
 
 ```groovy
 #!/usr/bin/env groovy
@@ -68,7 +68,7 @@ jenkins.disableSecurity()
 jenkins.save()
 ```
 
-And we put the whole `init.groovy.d` directory in our image using COPY in the Dockerfile:
+And i've put the whole `init.groovy.d` directory in my image using COPY in the Dockerfile:
 
 ```dockerfile
 # Add groovy script to Jenkins hook
@@ -80,7 +80,7 @@ The `--chown=jenkins:jenkins` option is added here to resolve permission problem
 
 ## Add Plugins
 Plugins can be installed easily by giving the plugin ID to the `install-plugins.sh` script. 
-This script is provided in the official Jenkins image on which we build. 
+This script is provided in the official Jenkins image upon which i'm building. 
 I have listed some useful plugins here which we add to our Dockerfile. 
 
 ```dockerfile
