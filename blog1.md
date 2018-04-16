@@ -96,7 +96,7 @@ RUN /usr/local/bin/install-plugins.sh \
 ## Add Multibranch Pipeline
 During startup I want Jenkins to load my Git repository containing the Jenkinsfile.
 This can be done by adding another Groovy script `initial_project.groovy` to the `init.groovy.d` directory. 
-I have added a Hello World Jenkinsfile example to the repository so we let Jenkins search in https://github.com/Dirc/jenkinsdev.git.
+I have added a Hello World Jenkinsfile example to the repository so we let Jenkins search in https://github.com/cinqict/jenkinsdev.
 
 ```groovy
 #!/usr/bin/env groovy
@@ -107,7 +107,7 @@ import jenkins.plugins.git.*
 import org.jenkinsci.plugins.workflow.multibranch.*
 
 // Git repo url containing a Jenkinsfile
-String gitRepoUrl = "https://github.com/Dirc/jenkinsdev.git"
+String gitRepoUrl = "https://github.com/cinqict/jenkinsdev"
 
 // Job name based on repository name
 String jobName = gitRepoUrl.tokenize(".")[-2].tokenize("/")[-1]
@@ -173,5 +173,5 @@ These Dockerfile and init Groovy scripts gives a simple Jenkins image which you 
 Eric Cornet <br>
 CI/CD Engineer 
 
-All code can be found on https://github.com/Dirc/jenkinsdev
+All code can be found on https://github.com/cinqict/jenkinsdev
 
