@@ -55,7 +55,7 @@ ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
 
 ## Remove Credentials
 Second we do not want to login each restart, hence we need to remove the required default credentials. 
-This can be done with a small Groovy script which we add to the init.groovy.d directory. All Groovy files in there will be executed during startup.
+This can be done with a small Groovy script which we add to the init.groovy.d directory. All Groovy files in this directory will be executed during startup.
 
 We create the file: `init.groovy.d/disable-securit.groovy`
 
@@ -81,7 +81,7 @@ The `--chown=jenkins:jenkins` option is added here to resolve permission problem
 ## Add Plugins
 Plugins can be installed easily by giving the plugin ID to the `install-plugins.sh` script. 
 This script is provided in the official Jenkins image on which we build. 
-I have listed some useful plugins here which we can add to our Dockerfile. 
+I have listed some useful plugins here which we add to our Dockerfile. 
 
 ```dockerfile
 # Get plugins
@@ -166,8 +166,8 @@ COPY --chown=jenkins:jenkins init.groovy.d/ /var/jenkins_home/init.groovy.d/
 ```
 
 ## Summarize
-This Dockerfile and init Groovy scripts gives use a simple Jenkins image which we can run en destroy in seconds. 
-This is very useful for developing your Jenkinsfiles and init Groovy scripts.
+This Dockerfile and init Groovy scripts gives use a simple Jenkins image which we can run en destroy in seconds and
+ is therefore very useful for developing your Jenkinsfiles and init Groovy scripts.
 
 
 Eric Cornet <br>
