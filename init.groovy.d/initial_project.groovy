@@ -1,4 +1,5 @@
 #!/usr/bin/env groovy
+import jenkins.model.*
 import hudson.util.PersistedList
 import jenkins.branch.*
 import jenkins.plugins.git.*

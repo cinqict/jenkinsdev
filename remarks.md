@@ -13,16 +13,18 @@ getInstance()
 Deprecated. 
 This is a historical alias for getInstanceOrNull() but with ambiguous nullability. Use get() in typical cases.
 
-- Jenkins.get() from 2.98 ???
+- Jenkins.get() from 2.98
 
 In the docker-plugin they use:
-https://plugins.jenkins.io/docker-plugin
 
 ```groovy
 // get Jenkins instance
 Jenkins jenkins = Jenkins.getInstance()
 ```
 
+ref: https://plugins.jenkins.io/docker-plugin
+
+### Conclusion
 Non of them seems to be preferred. 
 Since I consider docker-plugin developers to be most capable, 
 I will go for that usage.

@@ -59,6 +59,7 @@ We create the file: `init.groovy.d/disable-securit.groovy`
 
 ```groovy
 #!/usr/bin/env groovy
+import jenkins.model.*
 
 Jenkins jenkins = Jenkins.get()
 jenkins.disableSecurity()
@@ -98,6 +99,7 @@ I have added a Hello World Jenkinsfile example to the repository so we let Jenki
 
 ```groovy
 #!/usr/bin/env groovy
+import jenkins.model.*
 import hudson.util.PersistedList
 import jenkins.branch.*
 import jenkins.plugins.git.*

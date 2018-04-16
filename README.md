@@ -12,6 +12,7 @@ My intention was to create a Jenkins server which I can destroy and spin up agai
 Build image
 
 ```bash
+docker pull jenkins/jenkins
 docker build -t jenkinsdev .
 ```
 
