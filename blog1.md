@@ -6,30 +6,32 @@ To my surprise, I needed to google for multiple references to set this up.
 Enough reason to share my findings and result.
 
 Jenkins offers a official Docker image [jenkins/jenkins](https://hub.docker.com/r/jenkins/jenkins/). 
-This is a good starting point to create your own image since there is a extensive readme as well
+This is a good starting point to create your own image since there is a extensive readme
 with al kinds of code snippets for your Dockerfile. 
 
 ```bash
+# Get latest image
 docker pull jenkins/jenkins
+# Run Jenkins on port 80
 docker run -p 80:8080 jenkins/jenkins
 ```
 
-Running the `jenkins/jenkins` image you see immediately some manual steps which are nice for a first Jenkins experience, but not for your development environment. 
-You need to
-- Add a secret key from the log file, 
-- Select plugins, 
+Browse to `http://localhost:80` you see immediately some manual steps which are nice for a first Jenkins experience, but not for your development environment. 
+You need to:
+- Copy a secret key from the log file, 
+- Select plugins
 - Login with a default username/password 
-- Add your project
+- Create a project
 
 This gives us four manual steps which we want to get rid of. 
 To achieve this, we will create a Dockerfile and some initial Groovy script to configure Jenkins during start up.
 
 ## Set things up
-We start our Dockerfile by extending the Jenkins image as described in the jenkinsci readme.
+We start our Dockerfile by extending the Jenkins image as described in the readme ot the `jenkins/jenkins` image.
 
 ```dockerfile
-# Based on https://github.com/jenkinsci/docker/blob/master/README.md
-FROM jenkins/jenkins:lts
+# Extended from https://github.com/jenkinsci/docker/blob/master/README.md
+FROM jenkins/jenkins
 ```
 
 After each step, we will need to build and run our new image so we can verify the result.
@@ -87,8 +89,7 @@ RUN /usr/local/bin/install-plugins.sh \
   workflow-multibranch:latest \
   pipeline-model-definition:latest \
   pipeline-stage-view:latest \
-  git:latest \
-  credentials:latest 
+  git:latest
 ```
 
 
