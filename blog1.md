@@ -16,7 +16,7 @@ docker pull jenkins/jenkins
 docker run -p 80:8080 jenkins/jenkins
 ```
 
-Browse to `http://localhost:80` youimmediately see some manual steps which are nice for a first Jenkins experience, but not in your development environment. 
+Browse to `http://localhost:80` you immediately see some manual steps which are nice for a first Jenkins experience, but not in your development environment. 
 You need to:
 - Copy a secret key from the log file, 
 - Select plugins
@@ -55,9 +55,9 @@ ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false"
 
 ## Remove Credentials
 As a second step we do not want to login upon each restart, so we need to remove the required default credentials. 
-This is done with a small Groovy script which i've added to the init.groovy.d directory. All Groovy files in this directory will be executed during startup.
+This is done with a small Groovy script which can be added to the `init.groovy.d` directory. All Groovy files in this directory will be executed during startup.
 
-I've created the file: `init.groovy.d/disable-securit.groovy`
+Created the file: `init.groovy.d/disable-securit.groovy`
 
 ```groovy
 #!/usr/bin/env groovy
@@ -68,7 +68,7 @@ jenkins.disableSecurity()
 jenkins.save()
 ```
 
-And i've put the whole `init.groovy.d` directory in my image using COPY in the Dockerfile:
+And put the whole `init.groovy.d` directory in your image using COPY in the Dockerfile:
 
 ```dockerfile
 # Add groovy script to Jenkins hook
@@ -80,7 +80,7 @@ The `--chown=jenkins:jenkins` option is added here to resolve permission problem
 
 ## Add Plugins
 Plugins can be installed easily by giving the plugin ID to the `install-plugins.sh` script. 
-This script is provided in the official Jenkins image upon which i'm building. 
+This script is provided in the official Jenkins image. 
 I have listed some useful plugins here which we add to our Dockerfile. 
 
 ```dockerfile
@@ -94,9 +94,9 @@ RUN /usr/local/bin/install-plugins.sh \
 
 
 ## Add Multibranch Pipeline
-During startup i want Jenkins to load my Git repository containing the Jenkinsfile.
+During startup I want Jenkins to load my Git repository containing the Jenkinsfile.
 This can be done by adding another Groovy script `initial_project.groovy` to the `init.groovy.d` directory. 
-I have added a Hello World Jenkinsfile example to the repository so i can let Jenkins search https://github.com/Dirc/jenkinsdev.git.
+I have added a Hello World Jenkinsfile example to the repository so we let Jenkins search in https://github.com/Dirc/jenkinsdev.git.
 
 ```groovy
 #!/usr/bin/env groovy
@@ -133,17 +133,17 @@ jenkins.getItem(jobName).scheduleBuild()
 jenkins.save()
 ```
 
-Note: I've already copied the `init.groovy.d` directory in our Dockerfile. 
-So when i rebuild and start the image, Jenkins will start with my new project.
+Note: We have already copied the `init.groovy.d` directory in our Dockerfile. 
+So when you rebuild and start the image, Jenkins will start with my new project.
 
 
 ## Dockerfile
 Both the list of plugins and the init.groovy.d scripts will change from time to time.
-Following the [Docker best practices](https://cinqict.github.io/post/christiaan/docker_file_best_practices/) , i should put them at the end of my Dockerfile.
-Since downloading the plugins takes the biggest amount of time, i only want to do this if it's really necessary.
-So i've put the plugins above the init.groovy.d scripts. 
+Following the [Docker best practices](https://cinqict.github.io/post/christiaan/docker_file_best_practices/) , we should put them at the end of my Dockerfile.
+Since downloading the plugins takes the biggest amount of time, we only want to do this if it's really necessary.
+So it is best to put the plugins above the init.groovy.d scripts. 
 
-I ended up with the following Dockerfile:
+We end up with the following Dockerfile:
 
 ```dockerfile
 # Extended from https://github.com/jenkinsci/docker/blob/master/README.md
@@ -167,8 +167,7 @@ COPY --chown=jenkins:jenkins init.groovy.d/ /var/jenkins_home/init.groovy.d/
 ```
 
 ## Summarize
-These Dockerfile and init Groovy scripts gives me a simple Jenkins image which i can run en destroy in seconds and
- is therefore very useful for developing my Jenkinsfiles and init Groovy scripts.
+These Dockerfile and init Groovy scripts gives a simple Jenkins image which you can run en destroy in seconds and is therefore very useful for developing Jenkinsfiles and init Groovy scripts.
 
 
 Eric Cornet <br>
