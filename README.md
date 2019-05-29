@@ -36,5 +36,5 @@ Extended from https://github.com/jenkinsci/docker/blob/master/README.md
 More remarks inside the Dockerfile.
 
 #### Jenkinsfile Example
-Examples of Hello World Jenkinsfile. 
-Note that the Jenkinsfile normally will be in your appication repository.
+Example of a Hello World Jenkinsfile. 
+Note that the Jenkinsfile normally will be in your application repository.
