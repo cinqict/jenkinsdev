@@ -1,6 +1,6 @@
 # Blog: jenkinsdev
 
-This repository contains all needed code which is used in the blog on [Jenkins Development Image](blog1.md).
+This repository contains all needed code which is used in the blog on [Jenkins Development Image](https://cinqict.nl/building-a-jenkins-development-docker-image/).
 
 ## jenkinsdev
 
